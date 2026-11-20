@@ -4,7 +4,7 @@
 <meta name="theme-color" content="#e3c6d0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Lovelog">
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icon-192.png" type="image/png">
@@ -17,7 +17,7 @@
 :root{--bg:#e3c6d0;--ai:#ededed;--me:#cdbfc4;--tx:#575757;--ac:#b07a8e;--blur:14px;--aA:70%;--mA:70%;--fs:16px;--lh:1.8;
 --font:"Songti TC","Songti SC",Georgia,serif;--pin:"Pinyon Script",cursive;--ser:"Cormorant Garamond",Georgia,"Songti TC","Songti SC",serif;--pins:1;
 --mut:color-mix(in srgb,var(--tx) 52%,var(--bg));--line:color-mix(in srgb,var(--tx) 14%,transparent);--hia:60%;
---sat:max(env(safe-area-inset-top,0px),var(--sat-fb,0px));--sab:env(safe-area-inset-bottom,0px);--hh:calc(var(--sat) + 54px);
+--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--hh:calc(var(--sat) + 54px);
 --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color-scheme:light}
 :root[data-theme=dark]{--hia:11%;--dotA:9%;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -191,7 +191,7 @@ details.th .tb{border-left:3px solid var(--line);padding-left:12px;margin-top:6p
 .sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:6px}
 .sc{padding:14px 16px;border-radius:20px;background:color-mix(in srgb,var(--ai) var(--aA),transparent);border:1px solid color-mix(in srgb,#fff var(--hia),transparent);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff var(--hia),transparent)}
 .sc b{display:block;font-size:26px;font-weight:600;line-height:1.15}.sc small{color:var(--mut);font-size:12px}
-.sec{margin:20px 0}.sec h4{margin:0 0 10px;font-size:15px;font-weight:600}
+.sec{margin:20px 0}.sec h4{margin:0 0 10px;font-size:16px;font-weight:600;font-family:var(--ser);letter-spacing:.02em}.sec h4 .small{font-family:var(--font);font-weight:400}.sc b{font-family:var(--ser)}.sgrid .sc:first-child,.sgrid .sc:nth-child(4){background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 14%,transparent),transparent 70%),color-mix(in srgb,var(--ai) var(--aA),transparent)}
 #cinfo,#hinfo{margin-top:8px;min-height:20px;line-height:1.9}
 .heat{overflow-x:auto;padding-bottom:8px;scrollbar-width:none}.heat::-webkit-scrollbar{display:none}
 .hml{display:grid;gap:3px;font-size:10px;color:var(--mut);height:14px;margin-bottom:3px;white-space:nowrap}
@@ -250,7 +250,7 @@ html.blurm #msgs .m:not(.rv)>:not(.mt){filter:blur(7px);cursor:pointer}
 html.blurm #msgs .m:not(.rv) mark{background:transparent}
 /* 流暢模式：關掉氣泡、卡片、側邊欄背後的磨砂玻璃（最吃效能的部分）；模糊模式開著時氣泡本來就糊，也一併省掉 */
 html.lite .bub,html.lite .card,html.lite #side,html.blurm .bub,html.blurm .card{-webkit-backdrop-filter:none;backdrop-filter:none}
-html.satoff{--sat:0px}
+html.satoff{--sat:0px}html.satadd{--sat:max(env(safe-area-inset-top,0px),47px)}
 html.lite #side{background:color-mix(in srgb,var(--bg) 90%,transparent)}
 /* 氣泡樣式：只有我 / 只有 AI / 都沒有 */
 html.bub-me .m:not(.u) .bub,html.bub-ai .m.u .bub,html.bub-no .bub{background:none;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:2px 3px;border-radius:0;max-width:100%}
@@ -935,7 +935,7 @@ function buildSet(){
  +'<div class="seg" id="s_fcat" style="margin-top:8px"><button data-v="serif">襯線</button><button data-v="sans">無襯線</button><button data-v="hand">手寫風</button></div><div class="fl" id="fl"></div>'
  +'<h4>標題手寫字體</h4><div class="tfl" id="pnl"></div>'
  +'<h3>圖標<i>icône</i></h3><div class="icl" id="icl"></div><div class="small" style="margin-top:8px">應用內的圖標立刻生效；主屏幕上的圖標是「添加到主屏幕」那一刻存下的，想換要先刪掉舊的，選好後重新添加一次。</div>'
- +'<h3>效能<i>vitesse</i></h3><div class="lab" style="display:block">頂部留白<span class="seg" id="s_sat" style="display:flex;margin-top:8px"><button data-v="0">自動</button><button data-v="1">去掉</button><button data-v="2">加上</button></span></div><div class="small">如果頁面最上面出現一大塊空白（iPhone 主畫面 App 偶爾會這樣），選「去掉」。</div><label class="lab">流暢模式<span class="seg" id="s_lite" style="width:120px"><button data-v="1">開</button><button data-v="0">關</button></span></label><div class="small">關掉氣泡和側邊欄背後的磨砂玻璃，畫面會稍微不那麼通透，但捲動和切換會順很多（尤其是對話很多、平板偶爾卡的時候）。不確定要不要開，按下面的測速，會在你的裝置上實際比一次。</div><button class="btn" id="spd">測速：玻璃效果 vs 流暢模式</button>'
+ +'<h3>效能<i>vitesse</i></h3><div class="lab" style="display:block">頂部留白<span class="seg" id="s_sat" style="display:flex;margin-top:8px"><button data-v="0">自動</button><button data-v="1">去掉</button><button data-v="2">加上</button></span></div><div class="small">自動就是用系統給的數值。頁面最上面多出一大塊空白時選「去掉」，頁頭被時間和電量蓋住時選「加上」。</div><label class="lab">流暢模式<span class="seg" id="s_lite" style="width:120px"><button data-v="1">開</button><button data-v="0">關</button></span></label><div class="small">關掉氣泡和側邊欄背後的磨砂玻璃，畫面會稍微不那麼通透，但捲動和切換會順很多（尤其是對話很多、平板偶爾卡的時候）。不確定要不要開，按下面的測速，會在你的裝置上實際比一次。</div><button class="btn" id="spd">測速：玻璃效果 vs 流暢模式</button>'
  +'<h3>隱私<i>privé</i></h3><label class="lab">模糊模式<span class="seg" id="s_blm" style="width:120px"><button data-v="1">開</button><button data-v="0">關</button></span></label><div class="small">開了以後，對話裡的氣泡會先糊起來，點一下那則看清楚，再點一下又糊回去。</div>'
  +'<h3>資料與備份<i>sauvegarde</i></h3><div class="small" id="datainfo" style="margin-bottom:8px"></div><button class="btn" id="bkx">導出備份</button><button class="btn" id="bkr">從備份還原</button><div class="small">資料只存在這個瀏覽器裡：清除網站資料或換手機就沒了。定期導出一份備份最保險。</div>'
  +'<h4 style="margin-top:16px">整理對話</h4><button class="btn" id="impb">導入記錄（按壓縮包管理）</button><button class="btn" id="trb">回收桶</button><button class="btn" id="dupb">找重複的對話</button><button class="btn dz" id="delall">刪除全部對話</button><div class="small">刪掉的對話會先放進回收桶，30 天後才真的清掉；想馬上騰出空間，就到回收桶按「清空」。</div><div style="margin-top:10px"><button class="btn" id="phbb">批量補圖（按檔名配對）</button></div><div class="small">Claude 的匯出不含圖片檔、只有檔名；把原圖選進來，檔名一樣的就會自動補上。</div>'
@@ -1503,7 +1503,7 @@ async function renderStats(){
  const dayArr=[...ix.days.entries()].sort((a,b)=>a[0].localeCompare(b[0])),first=dayArr.length?dayArr[0][0]:null,last=dayArr.length?dayArr[dayArr.length-1][0]:null;
  const busiest=dayArr.slice().sort((a,b)=>b[1].m-a[1].m)[0];
  const card=(n,l)=>'<div class="sc"><b>'+n+'</b><small>'+l+'</small></div>';
- let h='<div class="head"><div class="hb"><h2>統計</h2></div><div class="hm">'+(first?first.replace(/-/g,'/')+' – '+last.replace(/-/g,'/'):'')+'</div></div>'
+ let h='<div class="head"><div class="hdt">statistiques</div><div class="hb"><h2>統計</h2></div><div class="hm">'+(first?first.replace(/-/g,'/')+' – '+last.replace(/-/g,'/'):'')+'</div></div>'
   +'<div class="sgrid">'+card(convs.length,'個對話')+card(fN(totalMsg),'則訊息')+card(fN(totalTok),'tokens（估算）')+card(dayArr.length,'天有聊天')+'</div>'
   +(busiest?'<div class="sec"><small class="small">聊得最多的一天：'+busiest[0].replace(/-/g,'/')+'，'+busiest[1].m+' 則訊息</small></div>':'')
   +'<div class="sec"><h4>每月 token</h4><div id="chart"></div><div class="small" id="cinfo">點一下曲線上的點看數字</div></div>'
@@ -1524,7 +1524,7 @@ function drawChart(ix){
  $('#chart').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block"><defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--ac)" stop-opacity=".38"/><stop offset="1" stop-color="var(--ac)" stop-opacity="0"/></linearGradient></defs>'
   +[0,.5,1].map(f=>'<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(mx*f)+'" y2="'+Y(mx*f)+'" stroke="var(--line)"/><text x="'+(L-5)+'" y="'+(Y(mx*f)+3)+'" text-anchor="end" font-size="9" fill="var(--mut)">'+fN(Math.round(mx*f))+'</text>').join('')
   +'<path d="'+area+'" fill="url(#ga)"/><path d="'+path+'" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
-  +pts.map((p,i)=>'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(all.length>30?1.6:3)+'" fill="var(--bg)" stroke="var(--ac)" stroke-width="1.6"/>'+(i%step===0||i===all.length-1?'<text x="'+p[0]+'" y="'+(H-8)+'" text-anchor="middle" font-size="9" fill="var(--mut)">'+all[i].slice(2).replace('-','/')+'</text>':'')).join('')
+  +pts.map((p,i)=>'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+(all.length>30?1.6:3)+'" fill="var(--bg)" stroke="var(--ac)" stroke-width="1.6"/>'+((i%step===0&&all.length-1-i>=Math.ceil(step/2))||i===all.length-1?'<text x="'+p[0]+'" y="'+(H-8)+'" text-anchor="middle" font-size="9" fill="var(--mut)">'+all[i].slice(2).replace('-','/')+'</text>':'')).join('')
   +'<circle id="cdot" r="5" fill="var(--ac)" style="display:none"/></svg>';
  const svg=$('#chart svg');
  const pick=e=>{const r=svg.getBoundingClientRect(),px=(e.clientX-r.left)/r.width*W;let bi=0,bd=1e9;pts.forEach((p,i)=>{const d=Math.abs(p[0]-px);if(d<bd){bd=d;bi=i}});const g=ix.months.get(all[bi])||{m:0,t:0,c:new Set()};
@@ -1920,7 +1920,7 @@ async function deleteAll(){
 function renderTrash(){
  pageStart();
  const now=Date.now(),list=trash.slice().sort((a,b)=>b.at-a.at),CAP=300;
- let h='<div class="head"><div class="hb"><h2>回收桶</h2></div><div class="hm">'+(list.length?list.length+' 個對話 · 放進來 '+TRASH_DAYS+' 天後自動清掉':'是空的')+'</div></div>';
+ let h='<div class="head"><div class="hdt">la corbeille</div><div class="hb"><h2>回收桶</h2></div><div class="hm">'+(list.length?list.length+' 個對話 · 放進來 '+TRASH_DAYS+' 天後自動清掉':'是空的')+'</div></div>';
  if(list.length)h+='<div><button class="btn" data-pg="trall">全部還原</button><button class="btn dz" data-pg="trempty">清空回收桶（永久刪除）</button></div>';
  h+='<div class="pg-list">'+list.slice(0,CAP).map(t=>{const c=t.c,left=Math.max(0,Math.ceil((t.at+TRASH_DAYS*864e5-now)/864e5));
   return'<div class="pi"><b>'+mdInline(c.title)+'</b><small>'+esc(sourceOf(c))+' · '+c.msgs.length+' 則 · '+fmt(c.created)+'<br>刪除於 '+fmt(t.at)+' · 還剩 '+left+' 天</small><button class="btn" data-pg="trs" data-id="'+c.id+'">還原</button><button class="btn dz" data-pg="trd" data-id="'+c.id+'">永久刪除</button></div>'}).join('')+'</div>'
@@ -1934,14 +1934,14 @@ function renderImps(){
  const rows=imps.slice().sort((a,b)=>(b.at2||b.at)-(a.at2||a.at)).map(r=>{const n=cnt.get(r.id)||0,o=only.get(r.id)||0;
   return'<div class="pi"><b>'+esc(r.name)+'</b><small>'+fmt(r.at)+' 導入'+(r.at2?'（'+fmt(r.at2)+' 又導入過一次）':'')+(r.size?' · '+fSize(r.size):'')+'<br>'+(n?'現在有 '+n+' 個對話'+(n>o?'，其中 '+(n-o)+' 個也在別的壓縮包裡':''):'這批的對話都已經刪掉了')+(r.n?'<br>導入當時讀到 '+r.n+' 個對話'+(r.sk&&(r.sk.e||r.sk.d)?'，另有 '+(r.sk.e?r.sk.e+' 個空對話':'')+(r.sk.e&&r.sk.d?'、':'')+(r.sk.d?r.sk.d+' 個檔案內重複':'')+'沒導入':''):'')+'</small>'+(r.sk&&r.sk.l&&r.sk.l.length?'<button class="btn" data-pg="iskip" data-id="'+esc(r.id)+'">跳過清單</button>':'')
    +(n?'<button class="btn" data-pg="isee" data-id="'+esc(r.id)+'">只看這批</button><button class="btn dz" data-pg="idel" data-id="'+esc(r.id)+'">刪除這批</button>':'<button class="btn" data-pg="irm" data-id="'+esc(r.id)+'">移除這條記錄</button>')+'</div>'}).join('');
- let h='<div class="head"><div class="hb"><h2>導入記錄</h2></div><div class="hm">每次導入的壓縮包都記在這裡：可以只看某一批，或把整批刪掉（先進回收桶）。</div></div><div class="pg-list">'+rows;
+ let h='<div class="head"><div class="hdt">les imports</div><div class="hb"><h2>導入記錄</h2></div><div class="hm">每次導入的壓縮包都記在這裡：可以只看某一批，或把整批刪掉（先進回收桶）。</div></div><div class="pg-list">'+rows;
  if(unk)h+='<div class="pi"><b>更早導入（來源不明）</b><small>'+unk+' 個對話。這些是 v8 之前導入的，當時沒有記下來自哪個壓縮包。<br>想補上：把當時的壓縮包再導入一次就好，不會重複添加，只會記下來源。</small><button class="btn" data-pg="iunk">只看這些</button></div>';
  if(!rows&&!unk)h+='<p class="small">還沒有導入記錄。</p>';
  $('#wrap').innerHTML=h+'</div>'}
 function renderSkip(id){
  pageStart();const r=imps.find(x=>x.id===id);if(!r||!r.sk){renderImps();return}
  const L=r.sk.l||[],cut=(r.sk.e+r.sk.d)>L.length;
- let h='<div class="head"><div class="hb"><h2>跳過清單</h2></div><div class="hm">「'+esc(r.name)+'」裡讀到、但沒有放進列表的對話。<br>空對話：匯出裡有這個對話，但裡面沒有任何可顯示的訊息（只有系統或隱藏內容，或開了頭沒發出去）。<br>檔案內重複：同一個檔案裡出現了兩次一模一樣的對話。</div></div><div class="pg-list"><div class="pi"><button class="btn" data-pg="ibk">← 回導入記錄</button></div>';
+ let h='<div class="head"><div class="hdt">les oubliés</div><div class="hb"><h2>跳過清單</h2></div><div class="hm">「'+esc(r.name)+'」裡讀到、但沒有放進列表的對話。<br>空對話：匯出裡有這個對話，但裡面沒有任何可顯示的訊息（只有系統或隱藏內容，或開了頭沒發出去）。<br>檔案內重複：同一個檔案裡出現了兩次一模一樣的對話。</div></div><div class="pg-list"><div class="pi"><button class="btn" data-pg="ibk">← 回導入記錄</button></div>';
  h+=L.map(x=>'<div class="pi"><b>'+esc(x.t)+'</b><small>'+(x.at?fmt(x.at)+' · ':'')+esc(x.p||'')+' · '+(x.w==='e'?'空對話':'檔案內重複')+'</small></div>').join('');
  if(cut)h+='<p class="small">只列出前 '+L.length+' 個，一共 '+(r.sk.e+r.sk.d)+' 個。</p>';
  $('#wrap').innerHTML=h+'</div>'}
@@ -1956,7 +1956,7 @@ function dupGroups(){const g=new Map();for(const c of convs){if(!c.created)conti
  return[...g.values()].filter(a=>a.length>1).map(a=>a.slice().sort((x,y)=>y.msgs.length-x.msgs.length||lastT(y)-lastT(x)))}
 function renderDups(){
  pageStart();const gs=dupGroups(),extra=gs.reduce((a,g)=>a+g.length-1,0);
- let h='<div class="head"><div class="hb"><h2>找重複的對話</h2></div><div class="hm">同一個平台、建立時間一模一樣的對話，通常是同一段對話被導出了兩次（中間多聊了幾句或改了標題，所以導入時沒被當成重複）。</div></div>';
+ let h='<div class="head"><div class="hdt">les doublons</div><div class="hb"><h2>找重複的對話</h2></div><div class="hm">同一個平台、建立時間一模一樣的對話，通常是同一段對話被導出了兩次（中間多聊了幾句或改了標題，所以導入時沒被當成重複）。</div></div>';
  if(!gs.length)h+='<div class="empty" style="margin-top:6vh"><p>沒有找到重複的對話 ✓</p><p class="small">共 '+convs.length+' 個對話</p></div>';
  else h+='<p class="small">找到 '+gs.length+' 組，多出來 '+extra+' 個。每組第一個（✓）是訊息最多的，會保留；收藏、備註、標籤會合併到它身上。</p><button class="btn" data-pg="dupgo">每組保留 ✓，其餘 '+extra+' 個移到回收桶</button><div class="pg-list">'
   +gs.slice(0,150).map(g=>'<div class="grp">'+g.map((c,j)=>'<div class="pi"><b>'+(j?'':'✓ ')+mdInline(c.title)+'</b><small>'+(j?'重複':'保留')+' · '+esc(sourceOf(c))+' · '+c.msgs.length+' 則 · 最後一則 '+fmt(lastT(c))+(srcNames(c)?' · 來自 '+esc(srcNames(c)):'')+'</small><button class="btn" data-pg="open" data-id="'+c.id+'">打開看看</button></div>').join('')+'</div>').join('')+'</div>'+(gs.length>150?'<p class="small">只列出前 150 組。</p>':'');
@@ -2060,30 +2060,12 @@ async function scanFiles(files){
   '== 可能與圖片 / 檔案 / 項目有關的欄位 ==',...(hint.length?hint:['（沒有找到）']),'','== 全部欄位 ==',...rows.slice(0,700)].join('\n');
  const r=await dlg({title:'結構檢查完成',msg:'下面只有欄位名稱和類型，沒有聊天內容。可以複製後貼給我。',area:out,buttons:['複製']});
  if(r&&r.i===0)copyText(out)}
-/* ================= 視口：安全區兜底 + iOS「主屏幕 App 上下留白」自動修復 ================= */
-let SATAUTO=false;
-function satApply(){document.documentElement.classList.toggle('satoff',S.sat===1||(S.sat!==2&&SATAUTO))}
+/* ================= 視口：安全區 =================
+   iOS 26 的主屏幕 App 有已知問題（WebKit 把可視高度算短一個狀態欄高度），任何「偵測再猜」的補丁都會猜錯，
+   所以這裡只保留：用系統給的 safe-area 數值 + 手動「去掉 / 加上」；鍵盤收起後讓頁面回到原位 */
+function satApply(){const c=document.documentElement.classList;c.toggle('satoff',S.sat===1);c.toggle('satadd',S.sat===2)}
 (()=>{
- const st=document.documentElement.style;
  const typing=()=>{const a=document.activeElement;return!!a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)};
- const standalone=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches;
- /* 冷啟動時 safe-area-inset-top 偶爾讀成 0：有劉海的 iPhone 給一個下限 */
- if(standalone&&/iPhone/.test(navigator.userAgent)&&Math.max(screen.height,screen.width)>=812)st.setProperty('--sat-fb','44px');
- const stuck=()=>navigator.standalone===true&&innerHeight>innerWidth&&screen.height>innerHeight&&screen.height-innerHeight<=100;
- let tries=0,healing=0;
- function heal(){
-  if(!stuck()){tries=0;if(SATAUTO){SATAUTO=false;satApply()}return}
-  if(typing())return;
-  if(tries>=3){const a=screen.height-innerHeight<=70;if(a!==SATAUTO){SATAUTO=a;satApply()}return}
-  if(healing)return;
-  healing=1;tries++;
-  const m=document.querySelector('meta[name=viewport]'),o=m.content;
-  m.content=o.replace('viewport-fit=cover','viewport-fit=auto');
-  setTimeout(()=>{m.content=o;healing=0},80)}
- ['resize','orientationchange','pageshow','focus'].forEach(e=>addEventListener(e,()=>setTimeout(heal,200)));
- document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(heal,200)});
- [300,1200,2500].forEach(t=>setTimeout(heal,t));
- /* 鍵盤收起後不讓頁面停在被推上去的位置 */
  const unscroll=()=>{if(window.scrollY||document.documentElement.scrollTop){scrollTo(0,0)}};
  document.addEventListener('focusout',()=>setTimeout(()=>{if(!typing())unscroll()},120));
  if(window.visualViewport)visualViewport.addEventListener('resize',()=>{if(!typing())unscroll()});

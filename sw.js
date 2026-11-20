@@ -1,4 +1,4 @@
-const CACHE='lovelog-static-v9c',RT='lovelog-runtime-v1';
+const CACHE='lovelog-static-v9d',RT='lovelog-runtime-v1';
 const ASSETS=['./','./index.html','./manifest.json','./icon-180.png','./icon-192.png','./icon-512.png'];
 const EXT=['fonts.googleapis.com','fonts.gstatic.com','cdnjs.cloudflare.com','unpkg.com'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)));self.skipWaiting()});

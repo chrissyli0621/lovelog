@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "Lovelog",
+  "short_name": "Lovelog",
+  "description": "在本機整理與搜尋匯出的聊天記錄",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e3c6d0",
+  "theme_color": "#e3c6d0",
+  "lang": "zh-Hant",
+  "icons": [
+    {"src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
